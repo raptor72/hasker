@@ -1,0 +1,4 @@
+/hasker/__pycache__/
+/haskerengine/__pycache__/
+/hasker/migrations/__pycache__/
+.coverage
