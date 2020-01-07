@@ -1,0 +1,18 @@
+{% extends 'hasker/base_hasker.html' %}
+
+
+{% block title %}
+    Hasker: Poor man's Stackoverflow
+{% endblock %}
+
+
+{% block content %}
+
+    <h2>Block content:</h2>
+    {% for name in names %}
+       <p>
+           {{ name }}
+       </p>
+    {% endfor %}
+
+{% endblock %}

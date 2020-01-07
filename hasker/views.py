@@ -1,3 +1,6 @@
 from django.shortcuts import render
 
-# Create your views here.
+
+def question_list(request):
+    n = ['A', 'B', 'C', 'D']
+    return render(request, 'hasker/index.html', context={'names': n})
