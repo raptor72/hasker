@@ -1,0 +1,17 @@
+{% extends 'hasker/base_hasker.html' %}
+
+{% block title %}
+    {{ question.title }} - {{ question.super }}
+{% endblock %}
+
+{% block content %}
+    <h1>
+        {{ question.title }}
+    </h1>
+
+    <p>
+        {{ question.comment }}
+    </p>
+{% endblock %}
+
+

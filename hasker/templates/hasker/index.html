@@ -9,10 +9,12 @@
 {% block content %}
 
     <h2>Block content:</h2>
-    {% for name in names %}
-       <p>
-           {{ name }}
-       </p>
+
+    {% for poll in polls %}
+        <p>
+            {{ question.title }} , {{ question.date_create }} <a href="{{ question.get_absolute_url }}" class="but1">look</a>
+        </p>
+
     {% endfor %}
 
 {% endblock %}
