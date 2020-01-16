@@ -12,5 +12,16 @@
     <p>
         {{ question.content }}
     </p>
+
+    <p>
+       {% for answer in question.answer_set.all %}
+            {{ answer.content }}
+            <br>
+            {{ answer.user  }}
+            <br>
+            <br>
+       {% endfor %}
+    </p>
+
 {% endblock %}
 
