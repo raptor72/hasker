@@ -1,0 +1,21 @@
+{% extends 'hasker/base_hasker.html' %}
+
+{% block title %}
+    {{ tag.title }} - {{ block.super }}
+{% endblock %}
+
+{% block content %}
+    <h1>
+        Quetions with "{{ tag.title| title }}" tag:
+    </h1>
+
+    <p>
+       {% for question in tag.questions.all %}
+        <p>
+            {{ question.title }} , {{ question.date_create }} <a href="{{ question.get_absolute_url }}" class="but1">look</a>
+        </p>
+       {% endfor %}
+    </p>
+
+{% endblock %}
+

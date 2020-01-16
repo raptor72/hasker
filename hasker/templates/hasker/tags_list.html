@@ -10,7 +10,7 @@
     <h2>Tags:</h2>
 
     {% for tag in tags %}
-        <p>{{ tag.title }}</p>
+        <p> <a href="{{ tag.get_absolute_url }}" class="but1">{{ tag.title  }}</a> </p>
     {% endfor %}
 
 {% endblock %}

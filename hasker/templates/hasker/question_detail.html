@@ -23,5 +23,13 @@
        {% endfor %}
     </p>
 
+
+    <h2> tags: </h2>
+    <p>
+       {% for tag in question.tags.all %}
+          <p> <a href="{{ tag.get_absolute_url }}" class="but1">{{ tag.title }}</a> </p>
+       {% endfor %}
+    </p>
+
 {% endblock %}
 
