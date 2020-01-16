@@ -1,11 +1,15 @@
 from django.shortcuts import render
-from .models import Question
+from .models import Question, Tag
 
 def question_list(request):
     questions = Question.objects.all()
     return render(request, 'hasker/index.html', context={'questions': questions})
 
 def question_detail(request, slug):
-    question = Question.objects.get(slug=slug)
+    question = Question.objects.get(slug__iexact=slug)
     return render(request, 'hasker/question_detail.html', context={'question': question})
+
+def tags_list(request):
+    tags = Tag.objects.all()
+    return render(request, 'hasker/tags_list.html', context={'tags': tags})
 

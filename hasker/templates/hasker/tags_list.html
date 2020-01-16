@@ -1,0 +1,16 @@
+{% extends 'hasker/base_hasker.html' %}
+
+
+{% block title %}
+    Tags list - {{ block.super  }}
+{% endblock %}
+
+
+{% block content %}
+    <h2>Tags:</h2>
+
+    {% for tag in tags %}
+        <p>{{ tag.title }}</p>
+    {% endfor %}
+
+{% endblock %}
