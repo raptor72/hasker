@@ -1,12 +1,14 @@
 from django.shortcuts import render
-from .models import Question, Tag
+from django.shortcuts import get_object_or_404
+from .models import *
 
 def question_list(request):
     questions = Question.objects.all()
     return render(request, 'hasker/index.html', context={'questions': questions})
 
 def question_detail(request, slug):
-    question = Question.objects.get(slug__iexact=slug)
+#    question = Question.objects.get(slug__iexact=slug)
+    question = get_object_or_404(Question, slug__iexact=slug)
     return render(request, 'hasker/question_detail.html', context={'question': question})
 
 def tags_list(request):
