@@ -3,11 +3,16 @@ from django.shortcuts import get_object_or_404
 from .models import *
 from django.views.generic import View
 from .utils import ObjectDetailMixin
+from django.views import generic
 
 
-def question_list(request):
-    questions = Question.objects.all()
-    return render(request, 'hasker/index.html', context={'questions': questions})
+class IndexView(generic.ListView):
+    template_name='hasker/index.html'
+    context_object_name='questions'
+
+    def get_queryset(self):
+        return Question.objects.all()
+
 
 def tags_list(request):
     tags = Tag.objects.all()
