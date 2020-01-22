@@ -15,7 +15,8 @@ class Question(models.Model):
         return reverse('question_detail_url', kwargs={'slug': self.slug})
 
     def __str__(self):
-        return '{}'.format(self.title)
+#        return '{}'.format(self.title)
+        return self.title
 
 
 class Answer(models.Model):

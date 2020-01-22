@@ -12,3 +12,4 @@ class ObjectDetailMixin:
         return render(request, self.template, context={self.model.__name__.lower(): obj})
 
 
+

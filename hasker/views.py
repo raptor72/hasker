@@ -1,9 +1,11 @@
 from django.shortcuts import render
+from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
 from .models import *
 from django.views.generic import View
 from .utils import ObjectDetailMixin
 from django.views import generic
+from .forms import TagForm
 
 
 class IndexView(generic.ListView):
@@ -27,3 +29,17 @@ class QuestionDetail(ObjectDetailMixin, View):
 class TagDetail(ObjectDetailMixin, View):
     model = Tag
     template = 'hasker/tag_detail.html'
+
+class TagCreate(View):
+    def get(self, request):
+        form = TagForm()
+        return render(request, 'hasker/tag_create.html', context={'form': form})
+
+    def post(self, request):
+        bound_form = TagForm(request.POST)
+        if bound_form.is_valid():
+            new_tag = bound_form.save()
+            return redirect(new_tag)
+        return render(request, 'hasker/tag_create.html', context={'form': bound_form})
+
+
