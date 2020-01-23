@@ -5,7 +5,7 @@ from .models import *
 from django.views.generic import View
 from .utils import ObjectDetailMixin
 from django.views import generic
-from .forms import TagForm
+from .forms import TagForm, QuestionForm
 
 
 class IndexView(generic.ListView):
@@ -41,5 +41,21 @@ class TagCreate(View):
             new_tag = bound_form.save()
             return redirect(new_tag)
         return render(request, 'hasker/tag_create.html', context={'form': bound_form})
+
+class QuestionCreate(View):
+    def get(self, request):
+        form = QuestionForm
+        return render(request, 'hasker/question_create.html', context={'form': form})
+
+    def post(self, request):
+        bound_form = QuestionForm(request.POST)
+        if bound_form.is_valid():
+            new_question = bound_form.save()
+            return redirect(new_question)
+        return render(request, 'hasker/question_create.html', context={'form': bound_form})
+
+
+
+
 
 
