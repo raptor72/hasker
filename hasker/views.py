@@ -6,7 +6,7 @@ from django.views.generic import View
 from .utils import ObjectDetailMixin
 from django.views import generic
 from .forms import TagForm, QuestionForm
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 class IndexView(generic.ListView):
     template_name='hasker/index.html'
@@ -21,13 +21,15 @@ def tags_list(request):
     return render(request, 'hasker/tags_list.html', context={'tags': tags})
 
 
-class QuestionDetail(ObjectDetailMixin, View):
+class QuestionDetail(LoginRequiredMixin, ObjectDetailMixin, View):
     model = Question
+    redirect_url = 'accounts:login'
     template = 'hasker/question_detail.html'
 
 
-class TagDetail(ObjectDetailMixin, View):
+class TagDetail(LoginRequiredMixin, ObjectDetailMixin, View):
     model = Tag
+    redirect_url = 'accounts:login'
     template = 'hasker/tag_detail.html'
 
 class TagCreate(View):
