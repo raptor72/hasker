@@ -50,10 +50,28 @@ class TagCreate(LoginRequiredMixin, ObjectCreateMixin, View):
     form_model  = TagForm
     template = 'hasker/tag_create.html'
 
+class TagUpdate(ObjectUpdateMixin, View):
+    model = Tag
+    model_form = TagForm
+    template = 'hasker/tag_update_form.html'
+
+#    def get(self, request, slug):
+#        tag = Tag.objects.get(slug__iexact=slug)
+#        bound_form = TagForm(instance=tag)
+#        return render(request, 'hasker/tag_update_form.html', context={'form': bound_form, 'tag':tag})
+
+#    def post(self, request, slug):
+#        tag = Tag.objects.get(slug__iexact=slug)
+#        bound_form = TagForm(request.POST, instance=tag)
+
+#        if bound_form.is_valid():
+#            new_tag = bound_form.save()
+#            return redirect(new_tag)
+#        return render(request, 'hasker/tag_update.html', context={'form': bound_form, 'tag':tag})
+
 class QuestionCreate(LoginRequiredMixin, ObjectCreateMixin, View):
     form_model  = QuestionForm
     template = 'hasker/question_create.html'
-
 
 #class QuestionCreate(View):
 #    def get(self, request):
@@ -67,7 +85,10 @@ class QuestionCreate(LoginRequiredMixin, ObjectCreateMixin, View):
 #            return redirect(new_question)
 #        return render(request, 'hasker/question_create.html', context={'form': bound_form})
 
-
+class QuestionUpdate(ObjectUpdateMixin, View):
+    model = Question
+    model_form = QuestionForm
+    template = 'hasker/question_update_form.html'
 
 
 
