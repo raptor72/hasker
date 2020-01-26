@@ -1,7 +1,9 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <title>
 
         {% block title %}
@@ -18,6 +20,11 @@
 
 <li> <a href="{% url 'questions_list_url' %}" > All Questions </a> </li>
 <li> <a href="{% url 'tags_list_url' %}" > All Tags </a> </li>
+
+<div class="admin-panel">
+    <a href="/admin"> Admin </a>
+    {% block admin-panel %}  {% endblock %}
+</div>
 
 </ul>
         {% block content %}

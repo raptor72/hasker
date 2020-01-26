@@ -1,0 +1,21 @@
+.admin-panel {
+    /* background: red; */
+    border: 1px solid #999;
+    border-radius: 2px;
+    position: fixed;
+    right: 50px;
+    /* bottom: 30px; */
+    head: 15px;
+    opacity: 0.3; /* brightness */
+    padding: 15px;
+    margin: 5px 0;  /*  resize more wide  */
+}
+
+.admin-panel:hover {
+    opacity: 1;
+}
+
+/*.admin-panel a {  a - for links
+    display: block; for horizontal view
+    margin: 5px 0;
+} */
