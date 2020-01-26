@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404
 from .models import *
 from django.views.generic import View
 from .utils import *
+from django.urls import reverse
 from django.views import generic
 from .forms import TagForm, QuestionForm
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -31,7 +32,6 @@ class TagDetail(LoginRequiredMixin, ObjectDetailMixin, View):
     model = Tag
     redirect_url = 'accounts:login'
     template = 'hasker/tag_detail.html'
-
 
 #class TagCreate(View):
 #    def get(self, request):
@@ -69,21 +69,20 @@ class TagUpdate(ObjectUpdateMixin, View):
 #            return redirect(new_tag)
 #        return render(request, 'hasker/tag_update.html', context={'form': bound_form, 'tag':tag})
 
+class TagDelete(View):
+    def get(self, request, slug):
+        tag = Tag.objects.get(slug__iexact=slug)
+        return render(request, 'hasker/tag_delete_form.html', context={'tag': tag})
+
+    def post(self, request, slug):
+        tag = Tag.objects.get(slug__iexact=slug)
+        tag.delete()
+        return redirect(reverse('tags_list_url'))
+
+
 class QuestionCreate(LoginRequiredMixin, ObjectCreateMixin, View):
     form_model  = QuestionForm
     template = 'hasker/question_create.html'
-
-#class QuestionCreate(View):
-#    def get(self, request):
-#        form = QuestionForm
-#        return render(request, 'hasker/question_create.html', context={'form': form})
-#
-#    def post(self, request):
-#        bound_form = QuestionForm(request.POST)
-#        if bound_form.is_valid():
-#            new_question = bound_form.save()
-#            return redirect(new_question)
-#        return render(request, 'hasker/question_create.html', context={'form': bound_form})
 
 class QuestionUpdate(ObjectUpdateMixin, View):
     model = Question

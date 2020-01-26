@@ -1,0 +1,18 @@
+{% extends 'hasker/base_hasker.html' %}
+
+{% block title %}
+    Delete Tag "{{ tag.title | title}}" - {{ block.super }}
+{% endblock %}
+
+{% block content %}
+
+    <form action="{% url 'tag_delete_url' slug=tag.slug %}}" method="post">
+        {% csrf_token %}
+
+        <h3> Are you shure you want to delete <b> "{{  tag.title|title }}" </b> tag </h3>
+        <a href="{% url 'tag_detail_url' slug=tag.slug %}">Cancel</a>
+{#        <a href="{{ tag.get_absolute_url }}">Cancel</a> #}
+        <button type="submit">Delete tag</button>
+    </form>
+
+{% endblock %}
