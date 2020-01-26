@@ -26,15 +26,16 @@ class TagForm(forms.ModelForm):
 class QuestionForm(forms.ModelForm):
     class Meta:
         model = Question
-        fields = ['author', 'title', 'slug', 'content', 'tags']
+#        fields = ['author', 'title', 'slug', 'content', 'tags']
 #        fields = ['title', 'slug', 'content', 'tags']
+        fields = ['title', 'content', 'tags']
         widgets = {
 #            'author': forms.ModelChoiceField(queryset=Question.objects),
 #            'author': forms.SelectMultiple(attrs={'class': 'form-control'}),
 #            'author': forms.ChoiceField(choices=User.objects.all()),
-            'tags': forms.SelectMultiple(attrs={'class': 'form-control'}),
+#            'author': forms.HiddenInput(),
             'title': forms.TextInput(attrs={'class': 'form-control'}),
-            'slug': forms.TextInput(attrs={'class': 'form-control'}),
+#            'slug': forms.TextInput(attrs={'class': 'form-control'}),
             'content': forms.Textarea(attrs={'class': 'form-control'}),
             'tags': forms.SelectMultiple(attrs={'class': 'form-control'}),
         }
