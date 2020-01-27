@@ -33,6 +33,10 @@ class TagDetail(LoginRequiredMixin, ObjectDetailMixin, View):
     redirect_url = 'accounts:login'
     template = 'hasker/tag_detail.html'
 
+class TagCreate(LoginRequiredMixin, ObjectCreateMixin, View):
+    form_model  = TagForm
+    template = 'hasker/tag_create.html'
+
 #class TagCreate(View):
 #    def get(self, request):
 #        form = TagForm()
@@ -44,11 +48,6 @@ class TagDetail(LoginRequiredMixin, ObjectDetailMixin, View):
 #            new_tag = bound_form.save()
 #            return redirect(new_tag)
 #        return render(request, 'hasker/tag_create.html', context={'form': bound_form})
-
-
-class TagCreate(LoginRequiredMixin, ObjectCreateMixin, View):
-    form_model  = TagForm
-    template = 'hasker/tag_create.html'
 
 class TagUpdate(ObjectUpdateMixin, View):
     model = Tag
@@ -69,15 +68,19 @@ class TagUpdate(ObjectUpdateMixin, View):
 #            return redirect(new_tag)
 #        return render(request, 'hasker/tag_update.html', context={'form': bound_form, 'tag':tag})
 
-class TagDelete(View):
-    def get(self, request, slug):
-        tag = Tag.objects.get(slug__iexact=slug)
-        return render(request, 'hasker/tag_delete_form.html', context={'tag': tag})
+class TagDelete(ObjectDeleteMixin, View):
+    model = Tag
+    template = 'hasker/tag_delete_form.html'
+    redirect_url = 'tags_list_url'
 
-    def post(self, request, slug):
-        tag = Tag.objects.get(slug__iexact=slug)
-        tag.delete()
-        return redirect(reverse('tags_list_url'))
+    # def get(self, request, slug):
+    #     tag = Tag.objects.get(slug__iexact=slug)
+    #     return render(request, 'hasker/tag_delete_form.html', context={'tag': tag})
+    #
+    # def post(self, request, slug):
+    #     tag = Tag.objects.get(slug__iexact=slug)
+    #     tag.delete()
+    #     return redirect(reverse('tags_list_url'))
 
 
 class QuestionCreate(LoginRequiredMixin, ObjectCreateMixin, View):
@@ -89,6 +92,8 @@ class QuestionUpdate(ObjectUpdateMixin, View):
     model_form = QuestionForm
     template = 'hasker/question_update_form.html'
 
-
-
+class QuestionDelete(ObjectDeleteMixin, View):
+    model = Question
+    template = 'hasker/question_delete_form.html'
+    redirect_url = 'questions_list_url'
 

@@ -11,5 +11,6 @@ urlpatterns = [
     path('tag/<str:slug>/delete/', TagDelete.as_view(), name='tag_delete_url'),
     path('<str:slug>/', QuestionDetail.as_view(), name='question_detail_url'),
     path('<str:slug>/update/', QuestionUpdate.as_view(), name='question_update_url'),
+    path('<str:slug>/delete/', QuestionDelete.as_view(), name='question_delete_url'),
 ]
 

@@ -1,0 +1,18 @@
+{% extends 'hasker/base_hasker.html' %}
+
+{% block title %}
+    Delete Question "{{ question.title | title}}" - {{ block.super }}
+{% endblock %}
+
+{% block content %}
+
+    <form action="{{ question.get_delete_url }}" method="post">
+        {% csrf_token %}
+
+        <h3> Are you shure you want to delete <b> "{{  question.title|title }}"</b>question?</h3>
+        <a href="{{ question.get_absolute_url }}">Cancel</a>
+        <button type="submit">Delete question</button>
+    </form>
+
+{% endblock %}
+
