@@ -49,7 +49,7 @@ class TagCreate(LoginRequiredMixin, ObjectCreateMixin, View):
 #            return redirect(new_tag)
 #        return render(request, 'hasker/tag_create.html', context={'form': bound_form})
 
-class TagUpdate(ObjectUpdateMixin, View):
+class TagUpdate(LoginRequiredMixin, ObjectUpdateMixin, View):
     model = Tag
     model_form = TagForm
     template = 'hasker/tag_update_form.html'
@@ -68,7 +68,7 @@ class TagUpdate(ObjectUpdateMixin, View):
 #            return redirect(new_tag)
 #        return render(request, 'hasker/tag_update.html', context={'form': bound_form, 'tag':tag})
 
-class TagDelete(ObjectDeleteMixin, View):
+class TagDelete(LoginRequiredMixin, ObjectDeleteMixin, View):
     model = Tag
     template = 'hasker/tag_delete_form.html'
     redirect_url = 'tags_list_url'
@@ -87,12 +87,12 @@ class QuestionCreate(LoginRequiredMixin, ObjectCreateMixin, View):
     form_model  = QuestionForm
     template = 'hasker/question_create.html'
 
-class QuestionUpdate(ObjectUpdateMixin, View):
+class QuestionUpdate(LoginRequiredMixin, ObjectUpdateMixin, View):
     model = Question
     model_form = QuestionForm
     template = 'hasker/question_update_form.html'
 
-class QuestionDelete(ObjectDeleteMixin, View):
+class QuestionDelete(LoginRequiredMixin, ObjectDeleteMixin, View):
     model = Question
     template = 'hasker/question_delete_form.html'
     redirect_url = 'questions_list_url'

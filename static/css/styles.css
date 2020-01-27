@@ -19,3 +19,6 @@
     display: block; for horizontal view
     margin: 5px 0;
 } */
+a.edit, a.delete {
+    display: none;
+}

@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block admin-panel %}
-<a href=""> Create </a>
-
+<a href="{% url 'question_create_url' %}"> Ask question </a>
+<a href="{{ admin_object.get_update_url }}" class="edit" style="{% if detail %}display: block;{% endif %}"> Edit </a>
+<a href="{{ admin_object.get_delete_url }}" class="delete" style="{% if detail %}display: block;{% endif %}"> Delete </a>
 {% endblock %}
