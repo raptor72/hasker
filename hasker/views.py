@@ -13,9 +13,11 @@ from django.core.paginator import Paginator
 class IndexView(generic.ListView):
     template_name='hasker/index.html'
     context_object_name='questions'
+    paginate_by = 2
+    queryset = Question.objects.all()
 
-    def get_queryset(self):
-        return Question.objects.all()
+#    def get_queryset(self):
+#        return Question.objects.all()
 
 
 

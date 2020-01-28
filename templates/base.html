@@ -44,8 +44,6 @@
             <a href="{{  prev_url }}" tabindex="-1">Prev</a>
         </li>
 
-{#        <li><a href="#">1</a> </li> #}
-
         {% for n in page_object.paginator.page_range %}
             {% if page_object.number == n %}
                 <li>
@@ -66,10 +64,11 @@
         <li class="{% if not next_url %} disabled {% endif %}">
             <a href="{{ next_url }}" tabindex="-1">Next</a>
         </li>
+
     </ul>
 </nav>
 
-{% endif %} 
+{% endif %}
 
 </body>
 </html>
