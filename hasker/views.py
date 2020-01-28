@@ -8,6 +8,7 @@ from django.urls import reverse
 from django.views import generic
 from .forms import TagForm, QuestionForm
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.paginator import Paginator
 
 class IndexView(generic.ListView):
     template_name='hasker/index.html'
@@ -17,9 +18,31 @@ class IndexView(generic.ListView):
         return Question.objects.all()
 
 
+
 def tags_list(request):
     tags = Tag.objects.all()
-    return render(request, 'hasker/tags_list.html', context={'tags': tags})
+    paginator = Paginator(tags, 2)
+
+    page_number = request.GET.get('page', 1)
+    page = paginator.get_page(page_number)
+    is_paginated = page.has_other_pages()
+    if page.has_previous():
+        prev_url = '?page={}'.format(page.previous_page_number())
+    else:
+        prev_url = ''
+    if page.has_next():
+        next_url = '?page={}'.format(page.next_page_number())
+    else:
+        next_url = ''
+
+    context = {
+        'page_object': page,
+        'is_paginated': is_paginated,
+        'next_url': next_url,
+        'prev_url': prev_url,
+    }
+
+    return render(request, 'hasker/tags_list.html', context=context)
 
 
 class QuestionDetail(LoginRequiredMixin, ObjectDetailMixin, View):

@@ -34,6 +34,9 @@ class Question(models.Model):
     def __str__(self):
         return self.title
 
+    class Meta:
+        ordering = ['-date_create']
+
 
 class Answer(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -58,3 +61,7 @@ class Tag(models.Model):
 
     def get_delete_url(self):
         return reverse('tag_delete_url', kwargs={'slug': self.slug})
+
+    class Meta:
+        ordering = ['title']
+
