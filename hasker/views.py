@@ -9,22 +9,35 @@ from django.views import generic
 from .forms import TagForm, QuestionForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
+from django.db.models import Q
+
 
 class IndexView(generic.ListView):
     template_name='hasker/index.html'
     context_object_name='questions'
     paginate_by = 2
-    queryset = Question.objects.all()
+#    queryset = Question.objects.all()
 
 #    def get_queryset(self):
 #        return Question.objects.all()
 
+    def get_queryset(self):
+        search_query = self.request.GET.get('search', '')
+        if search_query:
+            return Question.objects.filter(Q(title__icontains=search_query) | Q(content__icontains=search_query))
+        return Question.objects.all()
 
 
 def tags_list(request):
+#    search_query = request.GET.get('search', '')
+#
+#    if search_query:
+#        tags = Tag.objects.filter(title__icontains=search_query)
+#    else:
+#        tags = Tag.objects.all()
+
     tags = Tag.objects.all()
     paginator = Paginator(tags, 2)
-
     page_number = request.GET.get('page', 1)
     page = paginator.get_page(page_number)
     is_paginated = page.has_other_pages()
