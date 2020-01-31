@@ -46,6 +46,7 @@ class Answer(models.Model):
     is_correct = models.BooleanField(default=False)
 
 
+
 class Tag(models.Model):
     title = models.CharField(max_length=50)
     slug = models.SlugField(max_length=50, unique=True)

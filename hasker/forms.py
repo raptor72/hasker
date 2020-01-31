@@ -1,5 +1,5 @@
 from django import forms
-from .models import Tag, Question
+from .models import Tag, Question, Answer
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 
@@ -47,3 +47,14 @@ class QuestionForm(forms.ModelForm):
             raise ValidationError('Slug may not be "Create"')
         return new_slug
 
+
+class AnswerForm(forms.ModelForm):
+    class Meta:
+        model = Answer
+#        exclude = ('admitted',)
+#        fields = '__all__'
+        fields = ['content']
+        widgets = {
+            'content': forms.Textarea(attrs={'class': 'form-control'}),
+            'question': forms.HiddenInput(),
+        }

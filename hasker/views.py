@@ -6,7 +6,7 @@ from django.views.generic import View
 from .utils import *
 from django.urls import reverse
 from django.views import generic
-from .forms import TagForm, QuestionForm
+from .forms import TagForm, QuestionForm, AnswerForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 from django.db.models import Q
@@ -47,6 +47,7 @@ def tags_list(request):
 
 class QuestionDetail(LoginRequiredMixin, ObjectDetailMixin, View):
     model = Question
+    form_model = AnswerForm
     redirect_url = 'accounts:login'
     template = 'hasker/question_detail.html'
 
