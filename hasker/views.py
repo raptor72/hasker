@@ -52,6 +52,20 @@ class QuestionDetail(LoginRequiredMixin, ObjectDetailMixin, View):
     template = 'hasker/question_detail.html'
 
 
+def question_detail(request, slug):
+    user = request.user
+    if request.method == 'POST' and user.is_authenticated:
+        form = AnswerForm(request.POST)
+        if form.is_valid():
+            text = form.cleaned_data['text']
+            question = get_object_or_404(Question, slug=slug)
+            Answer.objects.create(question=question, content=text, user=user)
+            return render(request, 'hasker/question_detail.html', context={'form': form, 'question': question})
+    else:
+        form = AnswerForm()
+        question = Question.objects.get(slug=slug)
+        return render(request, 'hasker/question_detail.html', context={'form': form, 'question': question})
+
 class TagDetail(LoginRequiredMixin, ObjectDetailMixin, View):
     model = Tag
     redirect_url = 'accounts:login'
@@ -108,8 +122,9 @@ class TagDelete(LoginRequiredMixin, ObjectDeleteMixin, View):
 
 
 class QuestionCreate(LoginRequiredMixin, ObjectCreateMixin, View):
-    form_model  = QuestionForm
+    form_model = QuestionForm
     template = 'hasker/question_create.html'
+
 
 class QuestionUpdate(LoginRequiredMixin, ObjectUpdateMixin, View):
     model = Question

@@ -48,13 +48,17 @@ class QuestionForm(forms.ModelForm):
         return new_slug
 
 
-class AnswerForm(forms.ModelForm):
-    class Meta:
-        model = Answer
-#        exclude = ('admitted',)
-#        fields = '__all__'
-        fields = ['content']
-        widgets = {
-            'content': forms.Textarea(attrs={'class': 'form-control'}),
-            'question': forms.HiddenInput(),
-        }
+# class AnswerForm(forms.ModelForm):
+#     class Meta:
+#         model = Answer
+# #        exclude = ('admitted',)
+# #        fields = '__all__'
+#         fields = ['content']
+#         widgets = {
+#             'content': forms.Textarea(attrs={'class': 'form-control'}),
+#             'question': forms.HiddenInput(),
+#         }
+
+class AnswerForm(forms.Form):
+    text = forms.CharField(widget=forms.Textarea(), label='')
+

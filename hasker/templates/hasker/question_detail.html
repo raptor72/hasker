@@ -13,6 +13,7 @@
         {{ question.content }}
     </p>
 
+    <p> Answers is: </p>
     <p>
        {% for answer in question.answer_set.all %}
             {{ answer.content }}
@@ -31,7 +32,9 @@
        {% endfor %}
     </p>
 
-    <form action="{{ question.answer_set.save }}" method="post"> {# create, add #}
+{% if user.is_authenticated %}
+{#    <form action="{{ question.answer_set.save }}" method="post"> {# create, add #}
+    <form action="{{ question.get_absolute_url }}" method="post"> {# create, add #}
         {% csrf_token %}
 
         {% for field in form %}
@@ -45,7 +48,7 @@
 
         <button type="submit">Add answer</button>
     </form>
-
+ {% endif %}
 
 
 {% endblock %}
