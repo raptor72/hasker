@@ -10,6 +10,7 @@ from .forms import TagForm, QuestionForm, AnswerForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 from django.db.models import Q
+from django.http import HttpResponseRedirect
 
 
 class IndexView(generic.ListView):
@@ -60,16 +61,19 @@ def question_detail(request, slug):
             text = form.cleaned_data['text']
             question = get_object_or_404(Question, slug=slug)
             Answer.objects.create(question=question, content=text, user=user)
-            return render(request, 'hasker/question_detail.html', context={'form': form, 'question': question})
+            # return render(request, 'hasker/question_detail.html', context={'form': form, 'question': question})
+            return HttpResponseRedirect(question.get_absolute_url())
     else:
         form = AnswerForm()
         question = Question.objects.get(slug=slug)
         return render(request, 'hasker/question_detail.html', context={'form': form, 'question': question})
 
+
 class TagDetail(LoginRequiredMixin, ObjectDetailMixin, View):
     model = Tag
     redirect_url = 'accounts:login'
     template = 'hasker/tag_detail.html'
+
 
 class TagCreate(LoginRequiredMixin, ObjectCreateMixin, View):
     form_model  = TagForm
