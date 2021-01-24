@@ -13,13 +13,11 @@
         {{ question.content }}
     </p>
 
-    <h2> tags: </h2>
-    <p>
+    <div class="admin-panel">
        {% for tag in question.tags.all %}
-          <p> <a href="{{ tag.get_absolute_url }}" class="but1">{{ tag.title }}</a> </p>
+        <a href="{{ tag.get_absolute_url }}">{{ tag.title }}</a>
        {% endfor %}
-    </p>
-
+    </div>
 
     <h2> Answers</h2>
     <p>
