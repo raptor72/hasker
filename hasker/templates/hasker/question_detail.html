@@ -13,22 +13,22 @@
         {{ question.content }}
     </p>
 
-    <p> Answers is: </p>
-    <p>
-       {% for answer in question.answer_set.all %}
-            {{ answer.content }}
-            <br>
-            {{ answer.user  }}
-            <br>
-            <br>
-       {% endfor %}
-    </p>
-
-
     <h2> tags: </h2>
     <p>
        {% for tag in question.tags.all %}
           <p> <a href="{{ tag.get_absolute_url }}" class="but1">{{ tag.title }}</a> </p>
+       {% endfor %}
+    </p>
+
+
+    <h2> Answers</h2>
+    <p>
+       {% for answer in question.answer_set.all %}
+            {{ answer.content }}
+            <br>
+            <p class="answered"> answered by {{ answer.user  }} </p>
+            <br>
+            <br>
        {% endfor %}
     </p>
 
