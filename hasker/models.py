@@ -34,6 +34,9 @@ class Question(models.Model):
     def __str__(self):
         return self.title
 
+    def answer_count(self):
+        return self.answer_set.values().__len__()
+
     class Meta:
         ordering = ['-date_create']
 

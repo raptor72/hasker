@@ -19,7 +19,7 @@
        {% endfor %}
     </div>
 
-    <h2> Answers</h2>
+    <h2> {{ question.answer_count }} Answers</h2>
     <p>
        {% for answer in question.answer_set.all %}
             {{ answer.content }}
