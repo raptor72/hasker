@@ -19,20 +19,24 @@
        {% endfor %}
     </div>
 
-    <h2> {{ question.answer_count }} Answers</h2>
+    <h3>
+        {% if question.answer_count == 0 %} No answers yet {% endif %}
+        {% if question.answer_count == 1 %} {{ question.answer_count }} Answer {% endif %}
+        {% if question.answer_count > 1 %} {{ question.answer_count }} Answers {% endif %}
+    </h3>
+
     <p>
        {% for answer in question.answer_set.all %}
             {{ answer.content }}
             <br>
-            <p class="answered"> answered by {{ answer.user  }} </p>
+            <p class="answered"> answered {{ answer.user  }} {{ answer.date_create }} </p>
             <br>
             <br>
        {% endfor %}
     </p>
 
 {% if user.is_authenticated %}
-{#    <form action="{{ question.answer_set.save }}" method="post"> {# create, add #}
-    <form action="{{ question.get_absolute_url }}" method="post"> {# create, add #}
+    <form action="{{ question.get_absolute_url }}" method="post">
         {% csrf_token %}
 
         {% for field in form %}
