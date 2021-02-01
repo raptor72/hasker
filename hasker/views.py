@@ -61,7 +61,6 @@ def question_detail(request, slug):
             text = form.cleaned_data['text']
             question = get_object_or_404(Question, slug=slug)
             Answer.objects.create(question=question, content=text, user=user)
-            # return render(request, 'hasker/question_detail.html', context={'form': form, 'question': question})
             return HttpResponseRedirect(question.get_absolute_url())
     else:
         form = AnswerForm()
@@ -139,4 +138,23 @@ class QuestionDelete(LoginRequiredMixin, ObjectDeleteMixin, View):
     model = Question
     template = 'hasker/question_delete_form.html'
     redirect_url = 'questions_list_url'
+
+
+def vote_answer(request, answer_id):
+    user = request.user
+    # answer = Answer.objects.filter(id=answer_id).first()
+    # answer = Answer.objects.filter(id=answer_id)[0]
+    answer = Answer.objects.get(id=answer_id)
+    question = answer.question
+    print(question)
+
+    # question = get_object_or_404(Answer, question=answer)
+    user_can_vote = answer.user_can_vote(user)
+    print(user_can_vote)
+
+    if request.method == 'GET' and user.is_authenticated:
+        if user_can_vote:
+            Vote.objects.create(question=question, user=user, answer=answer)
+    return HttpResponseRedirect(question.get_absolute_url())
+
 

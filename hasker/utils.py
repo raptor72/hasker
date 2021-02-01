@@ -15,7 +15,6 @@ class ObjectDetailMixin:
         return render(request, self.template, context={self.model.__name__.lower(): obj, 'admin_object': obj, 'detail': True})
 
     def post(self, request, slug):
-#        obj = self.get_object()
         obj = self.model.objects.get(slug__iexact=slug)
         bound_form = self.form_model(request.POST, instance=obj)
 

@@ -5,9 +5,11 @@ from django.contrib.auth.models import User
 from django.utils.text import slugify
 from time import time
 
+
 def gen_slug(s):
     new_slug = slugify(s, allow_unicode=True)
     return new_slug + '-' + str(int(time()))
+
 
 class Question(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -48,6 +50,11 @@ class Answer(models.Model):
     date_create = models.DateTimeField(auto_now_add=True)
     is_correct = models.BooleanField(default=False)
 
+    def user_can_vote(self, user):
+        query_set = user.vote_set.all().filter(answer=self)
+        if query_set.exists():
+            return False
+        return True
 
 
 class Tag(models.Model):
@@ -69,3 +76,8 @@ class Tag(models.Model):
     class Meta:
         ordering = ['title']
 
+
+class Vote(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    answer = models.ForeignKey(Answer, on_delete=models.CASCADE)

@@ -12,5 +12,6 @@ urlpatterns = [
     path('<str:slug>/', question_detail, name='question_detail_url'),
     path('<str:slug>/update/', QuestionUpdate.as_view(), name='question_update_url'),
     path('<str:slug>/delete/', QuestionDelete.as_view(), name='question_delete_url'),
+    path('vote/<str:answer_id>/', vote_answer, name='vote_answer_url'),
 ]
 
