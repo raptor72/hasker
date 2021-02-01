@@ -56,6 +56,9 @@ class Answer(models.Model):
             return False
         return True
 
+    def vote_count(self):
+        return self.vote_set.values().__len__()
+
 
 class Tag(models.Model):
     title = models.CharField(max_length=50)
