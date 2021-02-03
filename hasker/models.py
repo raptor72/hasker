@@ -39,8 +39,15 @@ class Question(models.Model):
     def answer_count(self):
         return self.answer_set.values().__len__()
 
+    def user_can_vote(self, user):
+        query_set = user.vote_set.all().filter(question=self)
+        if query_set.exists():
+            return False
+        return True
+
     class Meta:
         ordering = ['-date_create']
+
 
 
 class Answer(models.Model):
@@ -50,11 +57,11 @@ class Answer(models.Model):
     date_create = models.DateTimeField(auto_now_add=True)
     is_correct = models.BooleanField(default=False)
 
-    def user_can_vote(self, user):
-        query_set = user.vote_set.all().filter(answer=self)
-        if query_set.exists():
-            return False
-        return True
+    # def user_can_vote(self, user):
+    #     query_set = user.vote_set.all().filter(answer=self)
+    #     if query_set.exists():
+    #         return False
+    #     return True
 
     def vote_count(self):
         return self.vote_set.values().__len__()

@@ -65,7 +65,8 @@ def question_detail(request, slug):
     else:
         form = AnswerForm()
         question = Question.objects.get(slug=slug)
-        return render(request, 'hasker/question_detail.html', context={'form': form, 'question': question})
+        user_can_vote = question.user_can_vote(request.user)
+        return render(request, 'hasker/question_detail.html', context={'form': form, 'question': question, 'user_can_vote': user_can_vote})
 
 
 class TagDetail(LoginRequiredMixin, ObjectDetailMixin, View):
@@ -149,7 +150,7 @@ def vote_answer(request, answer_id):
     print(question)
 
     # question = get_object_or_404(Answer, question=answer)
-    user_can_vote = answer.user_can_vote(user)
+    user_can_vote = question.user_can_vote(user)
     print(user_can_vote)
 
     if request.method == 'GET' and user.is_authenticated:

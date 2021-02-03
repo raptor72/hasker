@@ -29,7 +29,9 @@
        {% for answer in question.answer_set.all %}
             {{ answer.content }}
             <br>
-   <li><a href="{% url 'vote_answer_url' answer.id %}">Vote for this answer</a></li>
+
+                <li><a href="{% url 'vote_answer_url' answer.id %}">user can vote: {{ user_can_vote }} </a></li>
+
             <p class="answered"> answered {{ answer.user  }} {{ answer.date_create }} Votes: {{ answer.vote_count }} </p>
             <br>
             <br>
