@@ -63,6 +63,8 @@ def question_detail(request, slug):
             Answer.objects.create(question=question, content=text, user=user)
             return HttpResponseRedirect(question.get_absolute_url())
     else:
+        if question.author == user:
+            return render(request, 'hasker/question_detail.html', context={'question': question,})
         form = AnswerForm()
         user_can_vote = question.user_can_vote(request.user)
         return render(request, 'hasker/question_detail.html', context={'form': form, 'question': question, 'user_can_vote': user_can_vote})

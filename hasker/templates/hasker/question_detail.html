@@ -39,6 +39,7 @@
     </p>
 
 {% if user.is_authenticated %}
+    {% if question.author != request.user %}
     <form action="{{ question.get_absolute_url }}" method="post">
         {% csrf_token %}
 
@@ -50,10 +51,14 @@
             {{ field.label  }}
             {{ field }}
         {% endfor %}
-
-        <button type="submit">Add answer</button>
+         <button type="submit">Add answer</button>
     </form>
- {% endif %}
+    {% endif %}
+    {% if question.author == request.user %}
+        <div> You can not answered on your question </div>
+    {% endif %}
+
+{% endif %}
 
 
 {% endblock %}
