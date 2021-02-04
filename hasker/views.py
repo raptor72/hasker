@@ -55,16 +55,15 @@ class QuestionDetail(LoginRequiredMixin, ObjectDetailMixin, View):
 
 def question_detail(request, slug):
     user = request.user
+    question = get_object_or_404(Question, slug=slug)
     if request.method == 'POST' and user.is_authenticated:
         form = AnswerForm(request.POST)
         if form.is_valid():
             text = form.cleaned_data['text']
-            question = get_object_or_404(Question, slug=slug)
             Answer.objects.create(question=question, content=text, user=user)
             return HttpResponseRedirect(question.get_absolute_url())
     else:
         form = AnswerForm()
-        question = Question.objects.get(slug=slug)
         user_can_vote = question.user_can_vote(request.user)
         return render(request, 'hasker/question_detail.html', context={'form': form, 'question': question, 'user_can_vote': user_can_vote})
 

@@ -14,6 +14,7 @@
     </p>
 
     <div class="admin-panel">
+        <div> tags: </div>
        {% for tag in question.tags.all %}
         <a href="{{ tag.get_absolute_url }}">{{ tag.title }}</a>
        {% endfor %}
