@@ -31,7 +31,13 @@
             {{ answer.content }}
             <br>
 
+                {% if user_can_vote %}
                 <li><a href="{% url 'vote_answer_url' answer.id %}">user can vote: {{ user_can_vote }} </a></li>
+                {% endif %}
+
+                {% if choised_answer_id == answer.id %}
+                <li><a href="{% url 'vote_answer_url' answer.id %}">Your vote: {{ user_can_vote }} </a></li>
+                {% endif %}
 
             <p class="answered"> answered {{ answer.user  }} {{ answer.date_create }} Votes: {{ answer.vote_count }} </p>
             <br>

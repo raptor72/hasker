@@ -67,7 +67,12 @@ def question_detail(request, slug):
             return render(request, 'hasker/question_detail.html', context={'question': question,})
         form = AnswerForm()
         user_can_vote = question.user_can_vote(request.user)
-        return render(request, 'hasker/question_detail.html', context={'form': form, 'question': question, 'user_can_vote': user_can_vote})
+        if user_can_vote:
+            return render(request, 'hasker/question_detail.html', context={'form': form, 'question': question, 'user_can_vote': user_can_vote})
+        else:
+            choised_answer_id = question.vote_set.filter(user=user).first().answer.id
+            return render(request, 'hasker/question_detail.html',
+                          context={'form': form, 'question': question, 'choised_answer_id': choised_answer_id})
 
 
 class TagDetail(LoginRequiredMixin, ObjectDetailMixin, View):
@@ -80,6 +85,7 @@ class TagCreate(LoginRequiredMixin, ObjectCreateMixin, View):
     form_model  = TagForm
     template = 'hasker/tag_create.html'
 
+
 #class TagCreate(View):
 #    def get(self, request):
 #        form = TagForm()
@@ -91,6 +97,7 @@ class TagCreate(LoginRequiredMixin, ObjectCreateMixin, View):
 #            new_tag = bound_form.save()
 #            return redirect(new_tag)
 #        return render(request, 'hasker/tag_create.html', context={'form': bound_form})
+
 
 class TagUpdate(LoginRequiredMixin, ObjectUpdateMixin, View):
     model = Tag
@@ -110,6 +117,7 @@ class TagUpdate(LoginRequiredMixin, ObjectUpdateMixin, View):
 #            new_tag = bound_form.save()
 #            return redirect(new_tag)
 #        return render(request, 'hasker/tag_update.html', context={'form': bound_form, 'tag':tag})
+
 
 class TagDelete(LoginRequiredMixin, ObjectDeleteMixin, View):
     model = Tag
@@ -136,6 +144,7 @@ class QuestionUpdate(LoginRequiredMixin, ObjectUpdateMixin, View):
     model_form = QuestionForm
     template = 'hasker/question_update_form.html'
 
+
 class QuestionDelete(LoginRequiredMixin, ObjectDeleteMixin, View):
     model = Question
     template = 'hasker/question_delete_form.html'
@@ -144,19 +153,17 @@ class QuestionDelete(LoginRequiredMixin, ObjectDeleteMixin, View):
 
 def vote_answer(request, answer_id):
     user = request.user
-    # answer = Answer.objects.filter(id=answer_id).first()
-    # answer = Answer.objects.filter(id=answer_id)[0]
     answer = Answer.objects.get(id=answer_id)
     question = answer.question
-    print(question)
-
     # question = get_object_or_404(Answer, question=answer)
     user_can_vote = question.user_can_vote(user)
-    print(user_can_vote)
-
     if request.method == 'GET' and user.is_authenticated:
         if user_can_vote:
             Vote.objects.create(question=question, user=user, answer=answer)
+        else:
+            vote = Vote.objects.filter(question=question, user=user).first()
+            vote.delete()
     return HttpResponseRedirect(question.get_absolute_url())
+
 
 
