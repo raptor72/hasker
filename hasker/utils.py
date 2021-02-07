@@ -48,6 +48,7 @@ class ObjectUpdateMixin:
     model = None
     model_form = None
     template = None
+
     def get(self, request, slug):
         obj = self.model.objects.get(slug__iexact=slug)
         bound_form = self.model_form(instance=obj)

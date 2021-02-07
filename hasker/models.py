@@ -49,19 +49,12 @@ class Question(models.Model):
         ordering = ['-date_create']
 
 
-
 class Answer(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     content = models.TextField(blank=False, db_index=True)
     date_create = models.DateTimeField(auto_now_add=True)
     is_correct = models.BooleanField(default=False)
-
-    # def user_can_vote(self, user):
-    #     query_set = user.vote_set.all().filter(answer=self)
-    #     if query_set.exists():
-    #         return False
-    #     return True
 
     def vote_count(self):
         return self.vote_set.values().__len__()

@@ -28,7 +28,7 @@
 
     <p>
        {% for answer in question.answer_set.all %}
-            {{ answer.content }}
+            {{ answer.content }} {% if choised_answer_id == answer.id %} You vote for this answer {% endif %}
             <br>
 
                 {% if user_can_vote %}
@@ -36,7 +36,7 @@
                 {% endif %}
 
                 {% if choised_answer_id == answer.id %}
-                <li><a href="{% url 'vote_answer_url' answer.id %}">Your vote: {{ user_can_vote }} </a></li>
+                <li><a href="{% url 'vote_answer_url' answer.id %}">re-vote </a></li>
                 {% endif %}
 
             <p class="answered"> answered {{ answer.user  }} {{ answer.date_create }} Votes: {{ answer.vote_count }} </p>

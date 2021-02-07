@@ -19,9 +19,6 @@ class IndexView(generic.ListView):
     paginate_by = 8
 #    queryset = Question.objects.all()
 
-#    def get_queryset(self):
-#        return Question.objects.all()
-
     def get_queryset(self):
         search_query = self.request.GET.get('search', '')
         if search_query:
@@ -30,7 +27,6 @@ class IndexView(generic.ListView):
 
 
 def tags_list(request):
-
     tags = Tag.objects.all()
     paginator = Paginator(tags, 2)
     page_number = request.GET.get('page', 1)
@@ -46,11 +42,11 @@ def tags_list(request):
     return render(request, 'hasker/tags_list.html', context=context)
 
 
-class QuestionDetail(LoginRequiredMixin, ObjectDetailMixin, View):
-    model = Question
-    form_model = AnswerForm
-    redirect_url = 'accounts:login'
-    template = 'hasker/question_detail.html'
+# class QuestionDetail(LoginRequiredMixin, ObjectDetailMixin, View):
+#     model = Question
+#     form_model = AnswerForm
+#     redirect_url = 'accounts:login'
+#     template = 'hasker/question_detail.html'
 
 
 def question_detail(request, slug):
@@ -82,21 +78,8 @@ class TagDetail(LoginRequiredMixin, ObjectDetailMixin, View):
 
 
 class TagCreate(LoginRequiredMixin, ObjectCreateMixin, View):
-    form_model  = TagForm
+    form_model = TagForm
     template = 'hasker/tag_create.html'
-
-
-#class TagCreate(View):
-#    def get(self, request):
-#        form = TagForm()
-#        return render(request, 'hasker/tag_create.html', context={'form': form})
-#
-#    def post(self, request):
-#        bound_form = TagForm(request.POST)
-#        if bound_form.is_valid():
-#            new_tag = bound_form.save()
-#            return redirect(new_tag)
-#        return render(request, 'hasker/tag_create.html', context={'form': bound_form})
 
 
 class TagUpdate(LoginRequiredMixin, ObjectUpdateMixin, View):
