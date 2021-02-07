@@ -12,6 +12,8 @@ from django.core.paginator import Paginator
 from django.db.models import Q
 from django.http import HttpResponseRedirect
 
+from hasker.utils import fbv_paginator
+
 
 class IndexView(generic.ListView):
     template_name='hasker/index.html'
@@ -28,25 +30,8 @@ class IndexView(generic.ListView):
 
 def tags_list(request):
     tags = Tag.objects.all()
-    paginator = Paginator(tags, 2)
-    page_number = request.GET.get('page', 1)
-    page_obj = paginator.get_page(page_number)
-    is_paginated = page_obj.has_other_pages()
-
-    context = {
-        'page_obj': page_obj,
-        'is_paginated': is_paginated,
-        'page_obj.paginator': paginator,
-    }
-
+    context = fbv_paginator(request, tags, 3, 'page')
     return render(request, 'hasker/tags_list.html', context=context)
-
-
-# class QuestionDetail(LoginRequiredMixin, ObjectDetailMixin, View):
-#     model = Question
-#     form_model = AnswerForm
-#     redirect_url = 'accounts:login'
-#     template = 'hasker/question_detail.html'
 
 
 def question_detail(request, slug):
@@ -59,16 +44,22 @@ def question_detail(request, slug):
             Answer.objects.create(question=question, content=text, user=user)
             return HttpResponseRedirect(question.get_absolute_url())
     else:
+        answers = question.answer_set.all()
+        context = fbv_paginator(request, answers, 8, 'page')
         if question.author == user:
-            return render(request, 'hasker/question_detail.html', context={'question': question,})
+            context.update({'question': question,})
+            return render(request, 'hasker/question_detail.html', context=context)
         form = AnswerForm()
         user_can_vote = question.user_can_vote(request.user)
         if user_can_vote:
-            return render(request, 'hasker/question_detail.html', context={'form': form, 'question': question, 'user_can_vote': user_can_vote})
+            context.update({'form': form, 'question': question, 'user_can_vote': user_can_vote})
+            print(context)
+            return render(request, 'hasker/question_detail.html', context=context)
         else:
             choised_answer_id = question.vote_set.filter(user=user).first().answer.id
-            return render(request, 'hasker/question_detail.html',
-                          context={'form': form, 'question': question, 'choised_answer_id': choised_answer_id})
+            context.update({'form': form, 'question': question, 'choised_answer_id': choised_answer_id})
+            print(context)
+            return render(request, 'hasker/question_detail.html', context=context)
 
 
 class TagDetail(LoginRequiredMixin, ObjectDetailMixin, View):

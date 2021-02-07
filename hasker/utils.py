@@ -3,7 +3,10 @@ from django.shortcuts import redirect
 from django.urls import reverse
 from django.shortcuts import get_object_or_404
 from .models import *
+from django.core.paginator import Paginator
 
+from django.core.handlers.wsgi import WSGIRequest
+from django.db.models.query import QuerySet
 
 class ObjectDetailMixin:
     model = None
@@ -78,3 +81,22 @@ class ObjectDeleteMixin:
         obj.delete()
         return redirect(reverse(self.redirect_url))
 
+
+def fbv_paginator(request: WSGIRequest, queryset: QuerySet, paginate_by: int, page_string: str) -> dict:
+    """
+    Universal function based views paginator
+    Return context dict with pagination objects
+    """
+
+    paginator = Paginator(queryset, paginate_by)
+    page_number = request.GET.get(page_string, 1)
+    page_obj = paginator.get_page(page_number)
+    is_paginated = page_obj.has_other_pages()
+
+    context = {
+        'page_obj': page_obj,
+        'is_paginated': is_paginated,
+        'page_obj.paginator': paginator,
+    }
+
+    return context

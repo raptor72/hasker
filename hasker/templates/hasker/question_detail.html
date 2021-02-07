@@ -26,8 +26,10 @@
         {% if question.answer_count > 1 %} {{ question.answer_count }} Answers {% endif %}
     </h3>
 
+
     <p>
-       {% for answer in question.answer_set.all %}
+{#       {% for answer in question.answer_set.all %} #}
+         {% for answer in page_obj.object_list %}
             {{ answer.content }} {% if choised_answer_id == answer.id %} You vote for this answer {% endif %}
             <br>
 
