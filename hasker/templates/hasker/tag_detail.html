@@ -10,7 +10,8 @@
     </h1>
 
     <p>
-       {% for question in tag.questions.all %}
+{#       {% for question in tag.questions.all %}  #}
+        {% for question in page_obj.object_list %}
         <p>
             {{ question.title }} , {{ question.date_create }} <a href="{{ question.get_absolute_url }}" class="but1">look</a>
         </p>

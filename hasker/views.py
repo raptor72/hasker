@@ -11,13 +11,15 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.http import HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
 
 from hasker.utils import fbv_paginator
 
 
+
 class IndexView(generic.ListView):
-    template_name='hasker/index.html'
-    context_object_name='questions'
+    template_name = 'hasker/index.html'
+    context_object_name = 'questions'
     paginate_by = 8
 #    queryset = Question.objects.all()
 
@@ -34,6 +36,7 @@ def tags_list(request):
     return render(request, 'hasker/tags_list.html', context=context)
 
 
+@login_required
 def question_detail(request, slug):
     user = request.user
     question = get_object_or_404(Question, slug=slug)
@@ -66,6 +69,15 @@ class TagDetail(LoginRequiredMixin, ObjectDetailMixin, View):
     model = Tag
     redirect_url = 'accounts:login'
     template = 'hasker/tag_detail.html'
+
+
+@login_required
+def tag_detail(request, slug):
+    tag = get_object_or_404(Tag, slug=slug)
+    questions = tag.questions.all()
+    context = fbv_paginator(request, questions, 5, 'page')
+    context.update({'tag': tag})
+    return render(request, 'hasker/tag_detail.html', context=context)
 
 
 class TagCreate(LoginRequiredMixin, ObjectCreateMixin, View):
@@ -127,9 +139,8 @@ class QuestionDelete(LoginRequiredMixin, ObjectDeleteMixin, View):
 
 def vote_answer(request, answer_id):
     user = request.user
-    answer = Answer.objects.get(id=answer_id)
+    answer = get_object_or_404(Answer, id=answer_id)
     question = answer.question
-    # question = get_object_or_404(Answer, question=answer)
     user_can_vote = question.user_can_vote(user)
     if request.method == 'GET' and user.is_authenticated:
         if user_can_vote:
