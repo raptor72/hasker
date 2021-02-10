@@ -6,6 +6,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 
 from .forms import UserRegistrationForm
+from accounts.models import UserProfile
 
 
 #def login_user(request):
@@ -28,15 +29,23 @@ from .forms import UserRegistrationForm
 
 def user_registration(request):
     if request.method == 'POST':
-        form = UserRegistrationForm(request.POST)
+        form = UserRegistrationForm(request.POST, request.FILES)
+        print(form)
+        print(dir(form))
+        print(form.cleaned_data)
+        print(form.files)
+        print(request.FILES)
+        print(form.is_bound)
+        print(request.POST)
         if form.is_valid():
             username = form.cleaned_data['username']
             password = form.cleaned_data['password1']
             email = form.cleaned_data['email']
+            avatar = request.FILES['avatar']
             user = User.objects.create_user(username, email=email, password=password)
+            userprofile = UserProfile.objects.create(user=user, avatar=avatar)
             messages.success(request, 'Thanks for registering {}'.format(user.username))
             return redirect('accounts:login')
-#            return render(request, 'accounts/login.html', context={'form': form})
     else:
         form = UserRegistrationForm()
     return render(request, 'accounts/register.html', context={'form': form})
