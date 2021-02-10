@@ -5,7 +5,7 @@ from PIL import Image
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    avatar = models.ImageField(upload_to='hasker_pics/')
+    avatar = models.ImageField(upload_to='hasker_pics/%Y/%m/%d/')
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)

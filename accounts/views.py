@@ -30,13 +30,6 @@ from accounts.models import UserProfile
 def user_registration(request):
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST, request.FILES)
-        print(form)
-        print(dir(form))
-        print(form.cleaned_data)
-        print(form.files)
-        print(request.FILES)
-        print(form.is_bound)
-        print(request.POST)
         if form.is_valid():
             username = form.cleaned_data['username']
             password = form.cleaned_data['password1']

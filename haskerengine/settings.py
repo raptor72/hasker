@@ -127,7 +127,4 @@ STATICFILES_DIRS = [
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
-# MEDIA_ROOT = '/hasker_pics/'
-# MEDIA_URL = '/media/'
-
 #APPEND_SLASH = False
