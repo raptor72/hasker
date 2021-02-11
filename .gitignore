@@ -1,6 +1,7 @@
 /hasker/__pycache__/
 /haskerengine/__pycache__/
 /hasker/migrations/__pycache__/
+/hasker_pics/*
 /accounts/__pycache__/
 /accounts/migrations/__pycache__/
 .coverage
