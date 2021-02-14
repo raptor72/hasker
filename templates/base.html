@@ -38,7 +38,7 @@
 {% if request.user.is_authenticated %}
     <div class="admin-panel">
          <div> Signed is as
-            <a style="font-weight: bold"> {{ request.user }} </a>
+            <a style="font-weight: bold" href="/accounts/settings"> {{ request.user }} </a>
          </div>
         {% if request.user.is_superuser %}
             <a href="/admin"> Admin </a>
