@@ -16,12 +16,10 @@ from django.contrib.auth.decorators import login_required
 from hasker.utils import fbv_paginator
 
 
-
 class IndexView(generic.ListView):
     template_name = 'hasker/index.html'
     context_object_name = 'questions'
     paginate_by = 8
-#    queryset = Question.objects.all()
 
     def get_queryset(self):
         search_query = self.request.GET.get('search', '')

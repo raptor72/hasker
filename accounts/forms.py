@@ -9,7 +9,7 @@ class UserRegistrationForm(forms.Form):
                         max_length=100,
                         min_length=5,
                         widget=forms.TextInput(attrs={'class': 'form-control'}))
-    email = forms.EmailField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+    email = forms.EmailField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter your email'}))
     password1 = forms.CharField(
                             label="Password",
                             max_length=100,
@@ -37,4 +37,6 @@ class UserRegistrationForm(forms.Form):
         if p1 and p2:
             if p1 != p2:
                 raise ValidationError('Passwords Do Not Match')
+
+
 
