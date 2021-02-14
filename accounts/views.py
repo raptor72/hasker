@@ -71,6 +71,8 @@ def user_settings(request):
             return render(request, 'accounts/settings.html', context={'form': form, 'user': user})
     else:
         form = UserRegistrationForm()
+        form.fields['username'].initial = user.username
+        form.fields['email'].initial = user.email
     return render(request, 'accounts/settings.html', context={'form': form, 'user': user})
 
 

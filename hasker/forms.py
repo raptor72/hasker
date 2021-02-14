@@ -12,7 +12,6 @@ class TagForm(forms.ModelForm):
             'slug': forms.TextInput(attrs={'class': 'form-control'}),
         }
 
-
     def clean_slug(self):
         new_slug = self.cleaned_data['slug'].lower()
 
@@ -30,12 +29,7 @@ class QuestionForm(forms.ModelForm):
 #        fields = ['title', 'slug', 'content', 'tags']
         fields = ['title', 'content', 'tags']
         widgets = {
-#            'author': forms.ModelChoiceField(queryset=Question.objects),
-#            'author': forms.SelectMultiple(attrs={'class': 'form-control'}),
-#            'author': forms.ChoiceField(choices=User.objects.all()),
-#            'author': forms.HiddenInput(),
             'title': forms.TextInput(attrs={'class': 'form-control'}),
-#            'slug': forms.TextInput(attrs={'class': 'form-control'}),
             'content': forms.Textarea(attrs={'class': 'form-control'}),
             'tags': forms.SelectMultiple(attrs={'class': 'form-control'}),
         }
