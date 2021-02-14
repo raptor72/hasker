@@ -75,18 +75,3 @@ def user_settings(request):
         form.fields['email'].initial = user.email
     return render(request, 'accounts/settings.html', context={'form': form, 'user': user})
 
-
-
-
-# def vote_answer(request, answer_id):
-#     user = request.user
-#     answer = get_object_or_404(Answer, id=answer_id)
-#     question = answer.question
-#     user_can_vote = question.user_can_vote(user)
-#     if request.method == 'GET' and user.is_authenticated:
-#         if user_can_vote:
-#             Vote.objects.create(question=question, user=user, answer=answer)
-#         else:
-#             vote = Vote.objects.filter(question=question, user=user).first()
-#             vote.delete()
-#     return HttpResponseRedirect(question.get_absolute_url())

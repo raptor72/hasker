@@ -4,8 +4,6 @@
 
 {% block content %}
 
-{#{{ user.username }} #}
-
   <div class="container">
     <div class="row">
       <div class="col-sm-6 offset-sm-3">
@@ -31,5 +29,10 @@
       </div>
     </div>
   </div>
+
+
+            <img src="{{ user.userprofile.avatar.url }}" />
+
+
 
 {% endblock %}
