@@ -33,6 +33,17 @@
 
             <img src="{{ user.userprofile.avatar.url }}" />
 
+<h3> My questions </h3>
+
+    {% for question in user.question_set.all %}
+        <p> <a href="{{ question.get_absolute_url }}" class="but1">{{ question.title  }}</a> </p>
+    {% endfor %}
+
+
+<h3> My aswers </h3>
+    {% for answer in user.answer_set.all %}
+        <p> <a href="{{ answer.question.get_absolute_url }}" class="but1">{{ answer.question.title  }}</a> </p>
+    {% endfor %}
 
 
 {% endblock %}
