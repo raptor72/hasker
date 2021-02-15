@@ -8,19 +8,8 @@
 
     <form action="{% url 'question_create_url' %}" method="post">
         {% csrf_token %}
-
-        {% for field in form %}
-            {% if field.errors %}
-                {{ field.errors }}
-            {% endif %}
-
-            {{ field.label  }}
-            <br>
-            {{ field }}
-            <br>
-        {% endfor %}
-
-        <br>
+        {{ form.media }}
+        {{ form.as_p }}
         <button type="submit">create question</button>
     </form>
 

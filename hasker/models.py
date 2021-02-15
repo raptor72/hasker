@@ -1,6 +1,7 @@
 from django.db import models
 from django.shortcuts import reverse
 from django.contrib.auth.models import User
+from ckeditor.fields import RichTextField
 
 from django.utils.text import slugify
 from time import time
@@ -15,7 +16,8 @@ class Question(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=150, db_index=True)
     slug = models.SlugField(max_length=150, blank=True, unique=True)
-    content = models.TextField(blank=False, db_index=True)
+    # content = models.TextField(blank=False, db_index=True)
+    content = RichTextField(blank=False, db_index=True)
     tags = models.ManyToManyField('Tag', blank=True, related_name='questions')
     date_create = models.DateTimeField(auto_now_add=True)
 

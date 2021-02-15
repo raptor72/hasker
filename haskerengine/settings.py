@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'hasker',
     'accounts',
+    'ckeditor',
 ]
 
 MIDDLEWARE = [
