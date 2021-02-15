@@ -30,7 +30,7 @@
     <p>
 {#       {% for answer in question.answer_set.all %} #}
          {% for answer in page_obj.object_list %}
-            {{ answer.content }} {% if choised_answer_id == answer.id %} You vote for this answer {% endif %}
+            {{ answer.content | safe }} {% if choised_answer_id == answer.id %} You vote for this answer {% endif %}
             <br>
 
                 {% if user_can_vote %}
@@ -50,15 +50,16 @@
     {% if question.author != request.user %}
     <form action="{{ question.get_absolute_url }}" method="post">
         {% csrf_token %}
+        {{ form.media }}
+        {{ form.as_p }}
+<!--        {% for field in form %}-->
+<!--            {% if field.errors %}-->
+<!--                {{ field.errors }}-->
+<!--            {% endif %}-->
 
-        {% for field in form %}
-            {% if field.errors %}
-                {{ field.errors }}
-            {% endif %}
-
-            {{ field.label  }}
-            {{ field }}
-        {% endfor %}
+<!--            {{ field.label  }}-->
+<!--            {{ field }}-->
+<!--        {% endfor %}-->
          <button type="submit">Add answer</button>
     </form>
     {% endif %}

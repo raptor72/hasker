@@ -41,8 +41,8 @@ def question_detail(request, slug):
     if request.method == 'POST' and user.is_authenticated:
         form = AnswerForm(request.POST)
         if form.is_valid():
-            text = form.cleaned_data['text']
-            Answer.objects.create(question=question, content=text, user=user)
+            content = form.cleaned_data['content']
+            Answer.objects.create(question=question, content=content, user=user)
             return HttpResponseRedirect(question.get_absolute_url())
     else:
         answers = question.answer_set.all()

@@ -54,7 +54,8 @@ class Question(models.Model):
 class Answer(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    content = models.TextField(blank=False, db_index=True)
+    # content = models.TextField(blank=False, db_index=True)
+    content = RichTextField(blank=False, db_index=True)
     date_create = models.DateTimeField(auto_now_add=True)
     is_correct = models.BooleanField(default=False)
 

@@ -2,6 +2,8 @@ from django import forms
 from .models import Tag, Question, Answer
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
+from ckeditor.widgets import CKEditorWidget
+
 
 class TagForm(forms.ModelForm):
     class Meta:
@@ -54,5 +56,5 @@ class QuestionForm(forms.ModelForm):
 #         }
 
 class AnswerForm(forms.Form):
-    text = forms.CharField(widget=forms.Textarea(), label='')
+    content = forms.CharField(widget=CKEditorWidget(), label='content')
 
