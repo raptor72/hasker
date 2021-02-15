@@ -64,6 +64,7 @@
     {% endif %}
     {% if question.author == request.user %}
         <div> You can not answered on your question </div>
+        <a href="{{ question.get_update_url }}">Edit question</a>
     {% endif %}
 
 {% endif %}
