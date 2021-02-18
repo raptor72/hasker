@@ -46,7 +46,9 @@ def question_detail(request, slug):
             return HttpResponseRedirect(question.get_absolute_url())
     else:
         answers = question.answer_set.all()
+        has_correct_mark = question.answer_set.filter(is_correct=True).first()
         context = fbv_paginator(request, answers, 8, 'page')
+        context.update({'has_correct_mark': has_correct_mark})
         if question.author == user:
             context.update({'question': question,})
             return render(request, 'hasker/question_detail.html', context=context)
@@ -149,4 +151,23 @@ def vote_answer(request, answer_id):
     return HttpResponseRedirect(question.get_absolute_url())
 
 
+def mark_as_correct(request, answer_id):
+    user = request.user
+    answer = get_object_or_404(Answer, id=answer_id)
+    question = answer.question
+
+    if request.method == 'GET' and user.is_authenticated:
+        if user == question.author and not question.answer_set.filter(is_correct=True):
+            print('is question author, ano corrct selecteed, can mark as correct')
+        if user == question.author and question.answer_set.filter(is_correct=True):
+            print('is question author, and corrct selecteed, can not mark as correct')
+        else:
+            print('not author of cuestion. cannot anuthing')
+
+        # if user_can_vote:
+        #     Vote.objects.create(question=question, user=user, answer=answer)
+        # else:
+        #     vote = Vote.objects.filter(question=question, user=user).first()
+        #     vote.delete()
+    # return HttpResponseRedirect(question.get_absolute_url())
 

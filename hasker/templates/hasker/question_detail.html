@@ -41,7 +41,19 @@
                 <li><a href="{% url 'vote_answer_url' answer.id %}">re-vote </a></li>
                 {% endif %}
 
-            <p class="answered"> answered {{ answer.user  }} {{ answer.date_create }} Votes: {{ answer.vote_count }} </p>
+                {% if question.author == request.user and not has_correct_mark %}
+                you can mark this answer as correct
+                {% endif %}
+
+                {% if question.author == request.user and has_correct_mark %}
+                Remove correct mark
+                {% endif %}
+
+                {% if question.author != request.user and answer.is_correct %}
+                Author marked this question as correct
+                {% endif %}
+
+            <p class="answered"> answered {{ answer.user }} {{ answer.date_create }} Votes: {{ answer.vote_count }} </p>
             <br>
        {% endfor %}
     </p>
