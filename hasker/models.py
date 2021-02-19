@@ -16,10 +16,10 @@ class Question(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=150, db_index=True)
     slug = models.SlugField(max_length=150, blank=True, unique=True)
-    # content = models.TextField(blank=False, db_index=True)
     content = RichTextField(blank=False, db_index=True)
     tags = models.ManyToManyField('Tag', blank=True, related_name='questions')
     date_create = models.DateTimeField(auto_now_add=True)
+    rating = models.IntegerField(default=0, blank=False, null=False)
 
     def get_absolute_url(self):
         return reverse('question_detail_url', kwargs={'slug': self.slug})
@@ -54,10 +54,10 @@ class Question(models.Model):
 class Answer(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    # content = models.TextField(blank=False, db_index=True)
     content = RichTextField(blank=False, db_index=True)
     date_create = models.DateTimeField(auto_now_add=True)
     is_correct = models.BooleanField(default=False)
+    rating = models.IntegerField(default=0, blank=False, null=False)
 
     def vote_count(self):
         return self.vote_set.values().__len__()
