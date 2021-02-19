@@ -14,5 +14,6 @@ urlpatterns = [
     path('<str:slug>/update/', QuestionUpdate.as_view(), name='question_update_url'),
     path('<str:slug>/delete/', QuestionDelete.as_view(), name='question_delete_url'),
     path('vote/<str:answer_id>/', vote_answer, name='vote_answer_url'),
+    path('correct/<str:answer_id>/', mark_as_correct, name='mark_as_correct_url'),
 ]
 

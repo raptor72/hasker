@@ -1,3 +1,4 @@
+import logging
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
@@ -56,12 +57,10 @@ def question_detail(request, slug):
         user_can_vote = question.user_can_vote(request.user)
         if user_can_vote:
             context.update({'form': form, 'question': question, 'user_can_vote': user_can_vote})
-            print(context)
             return render(request, 'hasker/question_detail.html', context=context)
         else:
             choised_answer_id = question.vote_set.filter(user=user).first().answer.id
             context.update({'form': form, 'question': question, 'choised_answer_id': choised_answer_id})
-            print(context)
             return render(request, 'hasker/question_detail.html', context=context)
 
 
@@ -90,34 +89,11 @@ class TagUpdate(LoginRequiredMixin, ObjectUpdateMixin, View):
     model_form = TagForm
     template = 'hasker/tag_update_form.html'
 
-#    def get(self, request, slug):
-#        tag = Tag.objects.get(slug__iexact=slug)
-#        bound_form = TagForm(instance=tag)
-#        return render(request, 'hasker/tag_update_form.html', context={'form': bound_form, 'tag':tag})
-
-#    def post(self, request, slug):
-#        tag = Tag.objects.get(slug__iexact=slug)
-#        bound_form = TagForm(request.POST, instance=tag)
-
-#        if bound_form.is_valid():
-#            new_tag = bound_form.save()
-#            return redirect(new_tag)
-#        return render(request, 'hasker/tag_update.html', context={'form': bound_form, 'tag':tag})
-
 
 class TagDelete(LoginRequiredMixin, ObjectDeleteMixin, View):
     model = Tag
     template = 'hasker/tag_delete_form.html'
     redirect_url = 'tags_list_url'
-
-    # def get(self, request, slug):
-    #     tag = Tag.objects.get(slug__iexact=slug)
-    #     return render(request, 'hasker/tag_delete_form.html', context={'tag': tag})
-    #
-    # def post(self, request, slug):
-    #     tag = Tag.objects.get(slug__iexact=slug)
-    #     tag.delete()
-    #     return redirect(reverse('tags_list_url'))
 
 
 class QuestionCreate(LoginRequiredMixin, ObjectCreateMixin, View):
@@ -155,19 +131,20 @@ def mark_as_correct(request, answer_id):
     user = request.user
     answer = get_object_or_404(Answer, id=answer_id)
     question = answer.question
+    has_correct_mark = question.answer_set.filter(is_correct=True).first()
 
     if request.method == 'GET' and user.is_authenticated:
-        if user == question.author and not question.answer_set.filter(is_correct=True):
-            print('is question author, ano corrct selecteed, can mark as correct')
-        if user == question.author and question.answer_set.filter(is_correct=True):
-            print('is question author, and corrct selecteed, can not mark as correct')
+        if user == question.author and not has_correct_mark:
+            logging.warning('Answer can be market as correct')
+            answer.is_correct = True
+            answer.save()
+        if user == question.author and has_correct_mark and answer.is_correct:
+            logging.warning('Correct mark can be removed for this answer')
+            answer.is_correct = False
+            answer.save()
+        if user == question.author and has_correct_mark and not answer.is_correct:
+            logging.error('Question already have correct mark in another answer')
         else:
-            print('not author of cuestion. cannot anuthing')
-
-        # if user_can_vote:
-        #     Vote.objects.create(question=question, user=user, answer=answer)
-        # else:
-        #     vote = Vote.objects.filter(question=question, user=user).first()
-        #     vote.delete()
-    # return HttpResponseRedirect(question.get_absolute_url())
+            logging.error('Requested user can not marker answer as correct for this question')
+        return HttpResponseRedirect(question.get_absolute_url())
 

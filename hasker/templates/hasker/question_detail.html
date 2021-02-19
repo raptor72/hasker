@@ -42,15 +42,19 @@
                 {% endif %}
 
                 {% if question.author == request.user and not has_correct_mark %}
-                you can mark this answer as correct
+                <li><a href="{% url 'mark_as_correct_url' answer.id %}"> Mark as correct </a></li>
                 {% endif %}
 
-                {% if question.author == request.user and has_correct_mark %}
-                Remove correct mark
+                {% if question.author == request.user and has_correct_mark and answer.is_correct %}
+                <li><a href="{% url 'mark_as_correct_url' answer.id %}"> Remove correct mark </a></li>
                 {% endif %}
 
                 {% if question.author != request.user and answer.is_correct %}
                 Author marked this question as correct
+                {% endif %}
+
+                {% if question.author == request.user and answer.is_correct %}
+                You marked this question as correct
                 {% endif %}
 
             <p class="answered"> answered {{ answer.user }} {{ answer.date_create }} Votes: {{ answer.vote_count }} </p>
