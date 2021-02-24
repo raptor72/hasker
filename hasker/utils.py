@@ -1,3 +1,4 @@
+import logging
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.urls import reverse
@@ -7,6 +8,7 @@ from django.core.paginator import Paginator
 
 from django.core.handlers.wsgi import WSGIRequest
 from django.db.models.query import QuerySet
+from hasker.models import Question, Answer
 
 
 class ObjectDetailMixin:
@@ -103,3 +105,45 @@ def fbv_paginator(request: WSGIRequest, queryset: QuerySet, paginate_by: int, pa
     }
 
     return context
+
+
+def count_answer_rating(answer):
+    if not isinstance(answer, Answer):
+        return
+    rating = 0
+    if answer.is_correct is True:
+        rating += 5
+    rating += answer.vote_count()
+    answer.rating = rating
+    answer.save()
+    return rating
+
+
+def recalculate_answers():
+    recalculated_count = 0
+    for answer in Answer.objects.all():
+        rating = count_answer_rating(answer)
+        logging.warning('counted rating {} fro answer {}'.format(str(rating), answer.content[0:20]))
+        recalculated_count += 1
+    return recalculated_count
+
+
+def count_question_rating(question):
+    if not isinstance(question, Question):
+        return
+    rating = 0
+    rating += question.answer_count()
+    for answer in question.answer_set.all():
+        rating += answer.vote_count()
+    question.rating = rating
+    question.save()
+    return rating
+
+
+def recalculate_question():
+    recalculated_count = 0
+    for question in Question.objects.all():
+        rating = count_question_rating(question)
+        logging.warning('counted rating {} for question {}'.format(str(rating), question.content[0:20]))
+        recalculated_count += 1
+    return recalculated_count
