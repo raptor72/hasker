@@ -3,12 +3,11 @@
     border: 1px solid #999;
     border-radius: 2px;
     position: fixed;
-    right: 50px;
-    /* bottom: 30px; */
-    head: 15px;
+    right: 30px;
+    top: 30px; /* отступ блока сверху */
     opacity: 0.3; /* brightness */
-    padding: 15px;
-    margin: 5px 0;  /*  resize more wide  */
+    padding: 15px; /* отступы внутри блока */
+    margin: 5px;  /*  resize more wide  */
 }
 
 .admin-panel:hover {
@@ -29,4 +28,17 @@ a.edit, a.delete {
     font-size: 14px;
     background-color: #f5f5f5;
     border: 2px solid #cccccc;
+}
+
+.tag {
+    background-color: #add8e6;
+    border-radius: 2px;
+    opacity: 0.5; /* brightness */
+    padding: 5px;
+    /* padding: 10px 20px 10px 20px; */
+    /* margin-right: 1500px; */
+    right: 0;
+    /* margin: 5px 0; */
+    /* font-size: 1.1vw; */
+    /* float: left; */
 }
