@@ -10,7 +10,7 @@
     <h2>Tags:</h2>
 
     {% for tag in page_obj.object_list %}
-        <p> <a href="{{ tag.get_absolute_url }}" class="but1">{{ tag.title  }}</a> </p>
+        <a class="tag" href="{{ tag.get_absolute_url }}" class="but1">{{ tag.title }}</a>
     {% endfor %}
 
 {% endblock %}
