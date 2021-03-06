@@ -9,9 +9,10 @@
         {{ question.title }}
     </h1>
 
-    <p>
-        {{ question.content | safe }}
-    </p>
+    <div>
+        <p>{{ question.content | safe }}</p>
+        <p> asked {{ question.date_create }} by {{ question.author }} </p>
+    </div>
 
     <div>
        {% for tag in question.tags.all %}

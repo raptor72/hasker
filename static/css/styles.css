@@ -52,12 +52,11 @@ a.edit, a.delete {
 }
 
 .rating {
-    border-radius: 2px;
     padding: 2px;
     border: 1px solid #999;
-    border-radius: 2px;
+    border-radius: 4px;
     background-color: #90EE90;
-    opacity: 0.8;
-    width: 35px;
-    text-align: center;
+    opacity: 0.9;
+    width: 35px; /* ширина блока */
+    text-align: center; /* текст в центре блока */
 }
