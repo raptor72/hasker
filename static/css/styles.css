@@ -42,3 +42,22 @@ a.edit, a.delete {
     /* font-size: 1.1vw; */
     /* float: left; */
 }
+
+.trending {
+    border-radius: 2px;
+    position: fixed;
+    right: 30px;
+    top: 110px;
+    padding: 5px;
+}
+
+.rating {
+    border-radius: 2px;
+    padding: 2px;
+    border: 1px solid #999;
+    border-radius: 2px;
+    background-color: #90EE90;
+    opacity: 0.8;
+    width: 35px;
+    text-align: center;
+}

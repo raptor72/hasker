@@ -8,7 +8,7 @@
 
 {% block content %}
 
-    <h2>Block content:</h2>
+    <h2>All Questions</h2>
 
     {% for question in questions %}
         <div>
@@ -20,8 +20,8 @@
     {% endfor %}
 
 
-        <div id="trending">
-            <div class="title">Trending</div>
+        <div class="trending">
+            <div>Trending</div>
             <table>
                 {% for question in trending %}
                 <tr>
