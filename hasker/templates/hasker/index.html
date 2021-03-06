@@ -20,4 +20,17 @@
     {% endfor %}
 
 
+        <div id="trending">
+            <div class="title">Trending</div>
+            <table>
+                {% for question in trending %}
+                <tr>
+                    <td class="rating">{{ question.rating }}</td>
+                    <td><a href="{{ question.get_absolute_url }}">{{ question.title }}</a></td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+
 {% endblock %}
