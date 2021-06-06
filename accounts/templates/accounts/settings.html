@@ -41,8 +41,10 @@
 
 
 <h3> My aswers </h3>
-    {% for answer in user.answer_set.all %}
-        <p> <a href="{{ answer.question.get_absolute_url }}" class="but1">{{ answer.question.title  }}</a> </p>
+    {% for answer in user.answer_set.order_by|dictsort:"question_id" %}
+        {% ifchanged %}
+            <p> <a href="{{ answer.question.get_absolute_url }}" class="but1">{{ answer.question.title }}</a> </p>
+        {% endifchanged %}
     {% endfor %}
 
 

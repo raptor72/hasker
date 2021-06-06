@@ -62,6 +62,9 @@ class Answer(models.Model):
     def vote_count(self):
         return self.vote_set.values().__len__()
 
+    class Meta:
+        ordering = ['-date_create']
+
 
 class Tag(models.Model):
     title = models.CharField(max_length=50)
