@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+from celery.schedules import crontab
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -104,6 +105,15 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# CELERY_BROKER_URL = 'amqp://neo_local:neo@localhost:5672/neo'
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+# CELERY_RESULT_BACKEND = 'rpc://'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+CELERY_BROKER_HEARTBEAT = 0
+CELERY_BEAT_SCHEDULE = {
+    "recalculate_answers": {"task": "hasker.tasks.rec_answers", "schedule": crontab()},
+    "recalculate_questions": {"task": "hasker.tasks.rec_questions", "schedule": crontab()},
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
