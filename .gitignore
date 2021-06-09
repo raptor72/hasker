@@ -5,6 +5,7 @@
 /accounts/__pycache__/
 /accounts/migrations/__pycache__/
 /logs
+/api/__pycache__/
 celerybeat-schedule
 .coverage
 venv
