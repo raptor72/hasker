@@ -1,7 +1,6 @@
 import logging
 from django.shortcuts import render
 from django.shortcuts import redirect
-from django.urls import reverse
 from django.shortcuts import get_object_or_404
 from .models import *
 from django.core.paginator import Paginator
