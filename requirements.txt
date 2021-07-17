@@ -1,6 +1,7 @@
 Django>=2.2.24,<3.0
 django-ckeditor
 djangorestframework
+django-rest-swagger
 pip
 pytz
 setuptools
