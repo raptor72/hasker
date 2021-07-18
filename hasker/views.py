@@ -29,6 +29,14 @@ class IndexView(generic.ListView):
         return Question.objects.all()
 
 
+class TagsListView(generic.ListView):
+    model = Tag
+    context_object_name = 'tag'
+    queryset = Tag.objects.all()
+    template_name = 'hasker/tags_list.html'
+    paginate_by = 2
+
+
 def tags_list(request):
     tags = Tag.objects.all()
     context = fbv_paginator(request, tags, 3, 'page')
