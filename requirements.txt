@@ -26,3 +26,4 @@ typing-extensions
 vine
 wcwidth
 zipp
+psycopg2==2.8.6
