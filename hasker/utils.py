@@ -100,7 +100,7 @@ def fbv_paginator(request: WSGIRequest, queryset: QuerySet, paginate_by: int, pa
     context = {
         'page_obj': page_obj,
         'is_paginated': is_paginated,
-        'page_obj.paginator': paginator,
+        # 'page_obj.paginator': paginator,
     }
 
     return context
