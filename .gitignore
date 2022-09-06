@@ -11,3 +11,4 @@ celerybeat-schedule
 .coverage
 venv
 .idea
+__pycache__/
